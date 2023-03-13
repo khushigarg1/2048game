@@ -5,6 +5,7 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
         const { GridSize } = this.props;
+        // console.log("props", props);
 
         //-------Initialize the game grid with the specified size
         const grid = [];
@@ -13,6 +14,7 @@ class Board extends React.Component {
             for (let j = 0; j < GridSize; j++) {
                 //-------Each cell is an object with a value and a merged flag
                 grid[i].push({ value: 0, merged: false });
+                // console.log("gridvalue", grid[i]);
             }
         }
         //-------Add two random tiles to start the game
@@ -54,11 +56,14 @@ class Board extends React.Component {
 
     moveTilesLeft = () => {
         const { grid } = this.state;
+        // console.log("left key pressed");
+        // console.log("length of grid", grid.length);
 
         //-------Move tiles to the left and merge them
         for (let i = 0; i < grid.length; i++) {
             let k = 0;
             for (let j = 0; j < grid.length; j++) {
+                // console.log(grid[i][j].value);
                 if (grid[i][j].value !== 0) {
                     if (k !== j) {
                         grid[i][k].value = grid[i][j].value;
@@ -76,7 +81,7 @@ class Board extends React.Component {
                 }
             }
         }
-
+        // console.log(grid );
         //-------Add a new tile after moving
         this.addRandomTile(grid);
         //-------Reset the merged flag for all tiles
@@ -85,7 +90,9 @@ class Board extends React.Component {
     };
 
     moveTilesRight = () => {
+        // console.log(this.state);
         const { grid } = this.state;
+        // console.log("right key pressed");
 
         //-------Move tiles to the right and merge them
         for (let i = 0; i < grid.length; i++) {
@@ -108,6 +115,7 @@ class Board extends React.Component {
                 }
             }
         }
+        // console.log(grid );
         //-------Add a new tile after moving
         this.addRandomTile(grid);
         //-------Reset the merged flag for all tiles
@@ -117,6 +125,8 @@ class Board extends React.Component {
 
     moveTilesUp = () => {
         const { grid } = this.state;
+        // console.log("upper key pressed");
+
         //-------Move tiles up and merge them
         for (let j = 0; j < grid.length; j++) {
             let k = 0;
@@ -148,6 +158,8 @@ class Board extends React.Component {
     };
     moveTilesDown = () => {
         const { grid } = this.state;
+        // console.log("down key pressed");
+
         //-------Move tiles down and merge them
         for (let j = 0; j < grid.length; j++) {
             let k = grid.length - 1;
