@@ -3,7 +3,8 @@ import "./Board.css";
 
 class Board extends React.Component {
     constructor(props) {
-        super(props);
+        super(props);       //necessary 
+        // extracts the GridSize value from the props
         const { GridSize } = this.props;
         // console.log("props", props);
 
@@ -11,10 +12,13 @@ class Board extends React.Component {
         const grid = [];
         for (let i = 0; i < GridSize; i++) {
             grid.push([]);
+            // console.log("grid", grid);
             for (let j = 0; j < GridSize; j++) {
                 //-------Each cell is an object with a value and a merged flag
                 grid[i].push({ value: 0, merged: false });
+                // console.log("i, j", i, j);
                 // console.log("gridvalue", grid[i]);
+                // console.log("                ");
             }
         }
         //-------Add two random tiles to start the game
@@ -27,24 +31,24 @@ class Board extends React.Component {
         };
     }
 
-    handleKeyDown = (event) => {
-        switch (event.key) {
-            case 'ArrowLeft':
-                this.moveTilesLeft();
-                break;
-            case 'ArrowRight':
-                this.moveTilesRight();
-                break;
-            case 'ArrowUp':
-                this.moveTilesUp();
-                break;
-            case 'ArrowDown':
-                this.moveTilesDown();
-                break;
-            default:
-                break;
-        }
-    };
+    // handleKeyDown = (event) => {
+    //     switch (event.key) {
+    //         case 'ArrowLeft':
+    //             this.moveTilesLeft();
+    //             break;
+    //         case 'ArrowRight':
+    //             this.moveTilesRight();
+    //             break;
+    //         case 'ArrowUp':
+    //             this.moveTilesUp();
+    //             break;
+    //         case 'ArrowDown':
+    //             this.moveTilesDown();
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // };
 
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyDown);
@@ -199,14 +203,14 @@ class Board extends React.Component {
                     emptyCells.push({ x: i, y: j });
                 }
             }
-
-            //-------Choose a random empty cell and add a new tile with a value of 2 or 4
-            if (emptyCells.length > 0) {
-                const { x, y } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-                grid[x][y].value = Math.random() < 0.9 ? 2 : 4;
-                grid[x][y].merged = false;
-            }
         };
+        //-------Choose a random empty cell and add a new tile with a value of 2 or 4
+        if (emptyCells.length > 0) {
+            //a random number between 0 and the length of emptyCells-> round down the random number to the nearest integer
+            const { x, y } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+            grid[x][y].value = Math.random() < 0.9 ? 2 : 4;         //90% for 2 and 10% for 4
+            grid[x][y].merged = false;
+        }
     }
     resetMergedFlag = (grid) => {
         //-------Reset the merged flag for all tiles
@@ -236,14 +240,17 @@ class Board extends React.Component {
         }
     };
 
+
     render() {
-        const { GridSize } = this.props;
+        // const { GridSize } = this.props;
         const { grid, score } = this.state;
         return (
             <div className="board" tabIndex="0" onKeyDown={this.handleKeyDown}>
                 <div className="score">Score: {score}</div>
+                {/* to iterate over an array of rows in a grid */}
                 {grid.map((row, i) => (
                     <div key={i} className="board-row">
+                        {/* to iterate over an array of tiles */}
                         {row.map((tile, j) => (
                             <div
                                 key={j}
